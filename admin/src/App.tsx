@@ -1,16 +1,28 @@
-import { Link } from "react-router";
-import CommonLayout from "./components/common/CommonLayout";
-import { Button } from "./components/ui/button";
+import { Navigate, Outlet } from "react-router";
+import Sidebar from "./components/dashabord/Sidebar";
+import Header from "./components/common/Header";
+import { cn } from "./lib/utils";
 
 function App() {
+  const isAuthenticated = false;
+
+  if (!isAuthenticated) {
+    return <Navigate to={"/login"} />;
+  }
   return (
-    <CommonLayout>
-      <div className="p-10">
-        <h2 className="text-xl font-semibold">Baby Mart Admin Portal</h2>
-        <Link to={"/login"}>Login</Link>
-        <Button>click me</Button>
+    <div className="h-screen flex bg-background">
+      <Sidebar />
+      <div
+        className={cn(
+          "flex flex-col flex-1 max-w-[--breakpoint-2xl] hoverEffect ml-64"
+        )}
+      >
+        <Header />
+        <main>
+          <Outlet />
+        </main>
       </div>
-    </CommonLayout>
+    </div>
   );
 }
 

@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,20 +15,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/lib/validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LogIn } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { LogIn } from "lucide-react";
 
-type FormData = z.infer<typeof loginSchema>;
-
-const Login = () => {
+const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -40,7 +37,6 @@ const Login = () => {
       password: "",
     },
   });
-
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
       <motion.div
@@ -57,10 +53,10 @@ const Login = () => {
               transition={{ duration: 0.3 }}
             >
               <CardTitle className="text-3xl font-bold text-gray-800">
-                Admin Dashboard
+                Create an Account
               </CardTitle>
               <CardDescription className="text-gray-500">
-                Enter your credentials to sign in
+                Enter your details to sign up
               </CardDescription>
             </motion.div>
           </CardHeader>
@@ -137,4 +133,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default RegisterPage;
