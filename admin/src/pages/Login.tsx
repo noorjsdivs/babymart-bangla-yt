@@ -23,15 +23,15 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { LogIn } from "lucide-react";
+import { Loader2, LogIn } from "lucide-react";
+import useAuthStore from "@/store/useAuthStore";
 
 type FormData = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  const onSubmit = async () => {};
+  const { login } = useAuthStore();
 
   const form = useForm<FormData>({
     resolver: zodResolver(loginSchema),
@@ -40,6 +40,18 @@ const Login = () => {
       password: "",
     },
   });
+
+  const onSubmit = async (data: FormData) => {
+    setIsLoading(true);
+    try {
+      await login(data);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Failed to login:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
@@ -113,8 +125,20 @@ const Login = () => {
                   )}
                 />
                 <div>
-                  <Button className="w-full bg-indigo-600 hover:bg-indigo-700 hoverEffect text-white font-semibold py-2 rounded-lg">
-                    <LogIn /> Sign In
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 hoverEffect text-white font-semibold py-2 rounded-lg"
+                  >
+                    {isLoading ? (
+                      <span className="flex items-center gap-2">
+                        <Loader2 className="animate-spin" /> Signing in...
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        <LogIn /> Sign In
+                      </span>
+                    )}
                   </Button>
                 </div>
               </form>
