@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
+import userRoute from "./routes/userRoute.js";
 import connectDB from "./config/db.js";
 import cors from "cors";
 
@@ -39,6 +40,7 @@ app.use(
 app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoute);
 
 // API Documentation
 
