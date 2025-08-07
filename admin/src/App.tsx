@@ -4,6 +4,7 @@ import Header from "./components/common/Header";
 import { cn } from "./lib/utils";
 import useAuthStore from "./store/useAuthStore";
 import { useState } from "react";
+import { Toaster } from "sonner";
 
 function App() {
   const { isAuthenticated } = useAuthStore();
@@ -26,6 +27,7 @@ function App() {
           <Outlet />
         </main>
       </div>
+      <Toaster position="bottom-right" />
     </div>
   );
 }
